@@ -36,7 +36,7 @@ if (mysqli_num_rows($run_query) > 0) {
 			function xajax_getmodels(){return xajax.call("getmodels", arguments, 1);}
 			function xajax_getvideocards(){return xajax.call("getvideocards", arguments, 1);}
 			function xajax_getcpucoolings(processor_id, body_id) {return xajax.call("getcpucoolings", [processor_id, body_id], 1);}
-			function xajax_getrammemoryes(motherboard_id){return xajax.call("getrammemoryes",motherboard_id, 1);}
+			function xajax_getrammemoryes(motherboard_id){return xajax.call("getrammemoryes",[parseInt(motherboard_id)], 1);}
 			function xajax_getstorages(){return xajax.call("getstorages", arguments, 1);}
 			function xajax_getpowerunits(processor_id, videocard_id){return xajax.call("getpowerunits",[processor_id, videocard_id] , 1);}
 			//function xajax_list(){return xajax.call("list", arguments, 1);}
