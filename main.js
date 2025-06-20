@@ -2,7 +2,7 @@
 $(document).ready(function(){
     // Вызываем функции при загрузке страницы
     cat();     // Загружаем категории
-    brand();   // Загружаем бренды
+    brand();   // Загружаем типы
     product(); // Загружаем продукты
     page();    // Загружаем пагинацию
     
@@ -46,14 +46,14 @@ $(document).ready(function(){
         })
     }
     
-    // Функция загрузки брендов из базы данных
+    // Функция загрузки типов из базы данных
     function brand(){
         $.ajax({
             url     : "action.php",
             method  : "POST",
-            data    : {brand:1}, // Запрашиваем бренды
+            data    : {brand:1}, // Запрашиваем типы
             success : function(data){
-                $("#get_brand").html(data); // Вставляем бренды в соответствующий элемент
+                $("#get_brand").html(data); // Вставляем типы в соответствующий элемент
             }
         })
     }
@@ -96,21 +96,21 @@ $(document).ready(function(){
     })
 
     /*
-        Обработчик клика по бренду.
-        При клике загружаем продукты выбранного бренда.
+        Обработчик клика по типу.
+        При клике загружаем продукты выбранного типа.
     */
     $("body").delegate(".selectBrand","click",function(event){
         event.preventDefault(); // Отменяем стандартное поведение
         $("#get_product").html("<h3>Загрузка...</h3>"); // Показываем сообщение о загрузке
-        var bid = $(this).attr('bid'); // Получаем ID бренда
+        var bid = $(this).attr('bid'); // Получаем ID типа
         
         $.ajax({
             url     : "action.php",
             method  : "POST",
-            // Передаем ID выбранного бренда
+            // Передаем ID выбранного типа
             data    : {selectBrand:1, brand_id:bid},
             success : function(data){
-                $("#get_product").html(data); // Вставляем продукты бренда
+                $("#get_product").html(data); // Вставляем продукты типа
                 // Если экран меньше 480px, прокручиваем к продуктам
                 if($("body").width() < 480){
                     $("body").scrollTop(683);
@@ -123,12 +123,12 @@ $(document).ready(function(){
     // Обработчик изменения селектора цены
     $("body").delegate("#price_select","change",function(event){
         var val_select = $(this).val(); // Получаем выбранное значение
-        var val_id = $('#barnds_id').val(); // Получаем ID бренда
+        var val_id = $('#barnds_id').val(); // Получаем ID типа
         
         $.ajax({
             url     : "action.php",
             method  : "POST",
-            // Передаем параметры для фильтрации по цене и бренду
+            // Передаем параметры для фильтрации по цене и типу
             data    : {selectBrand:1, brand_id:val_id, select_id:val_select},
             success : function(data){
                 $("#get_product").html(data); // Обновляем список продуктов

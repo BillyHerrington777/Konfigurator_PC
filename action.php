@@ -35,29 +35,29 @@ if(isset($_POST["category"])){
     }
 }
 
-// Обработка запроса для получения брендов
+// Обработка запроса для получения типов
 if(isset($_POST["brand"])){
     $brand_query = "SELECT * FROM brands";
     $run_query = mysqli_query($con,$brand_query);
     
-    // Начинаем вывод HTML-разметки для брендов
+    // Начинаем вывод HTML-разметки для типов
     echo "
         <div class='nav nav-pills nav-stacked'>
             <li class='active'><a href='#'><h4>Вид сборки</h4></a></li>
     ";
     
-    // Если бренды найдены, выводим их
+    // Если типы найдены, выводим их
     if(mysqli_num_rows($run_query) > 0){
         while($row = mysqli_fetch_array($run_query)){
-            $bid = $row["brand_id"];        // ID бренда
-            $brand_name = $row["brand_title"]; // Название бренда
+            $bid = $row["brand_id"];        // ID типа
+            $brand_name = $row["brand_title"]; // Название типа
             
-            // Выводим каждый бренд как ссылку
+            // Выводим каждый тип как ссылку
             echo "
                     <li><a href='#' class='selectBrand' bid='$bid'>$brand_name</a></li>
             ";
         }
-        echo "</div>"; // Закрываем блок брендов
+        echo "</div>"; // Закрываем блок типов
     }
 }
 
@@ -98,7 +98,7 @@ if(isset($_POST["getProduct"])){
         while($row = mysqli_fetch_array($run_query)){
             $pro_id    = $row['product_id'];     // ID товара
             $pro_cat   = $row['product_cat'];    // Категория товара
-            $pro_brand = $row['product_brand'];  // Бренд товара
+            $pro_brand = $row['product_brand'];  // тип товара
             $pro_title = $row['product_title'];  // Название товара
             $pro_price = $row['product_price'];  // Цена товара
             $pro_image = $row['product_image'];   // Изображение товара
@@ -122,7 +122,7 @@ if(isset($_POST["getProduct"])){
     }
 }
 
-// Обработка запросов для фильтрации товаров (по категории, бренду или поиску)
+// Обработка запросов для фильтрации товаров (по категории, типу или поиску)
 if(isset($_POST["get_seleted_Category"]) || isset($_POST["selectBrand"]) || isset($_POST["search"])){
     // Определяем тип фильтрации и формируем соответствующий SQL-запрос
     if(isset($_POST["get_seleted_Category"])){
@@ -130,7 +130,7 @@ if(isset($_POST["get_seleted_Category"]) || isset($_POST["selectBrand"]) || isse
         $id = $_POST["cat_id"];
         $sql = "SELECT * FROM products WHERE product_cat = '$id'";
     }else if(isset($_POST["selectBrand"])){
-        // Фильтрация по бренду с возможной дополнительной фильтрацией по цене
+        // Фильтрация по типу с возможной дополнительной фильтрацией по цене
         $id = $_POST["brand_id"];
         if (isset($_POST["select_id"])) {
             switch($_POST["select_id"]){
